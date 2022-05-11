@@ -1,0 +1,49 @@
+class Solution {
+public:
+    int countNode(ListNode *head)
+    {
+        int ct = 0;
+        while(head)
+        {
+            ct++;
+            head = head->next;
+        }
+        return ct;
+    }
+    
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
+    {
+        ListNode* p1;
+        ListNode* p2;
+        int x = countNode(headA);
+        int y = countNode(headB);
+        int diff;
+        if(x<y)
+        {
+            p1 = headB;
+            p2 = headA;
+            diff = y-x;
+        }
+        else
+        {
+            p1 = headA;
+            p2 = headB;
+            diff = x-y;
+        }
+        while(diff)
+        {
+            p1=p1->next;
+            diff--;
+        }
+        while(p1!=NULL && p2!=NULL)
+        {
+            if(p1 == p2)
+            {
+                return p1;
+            }
+            p1 = p1->next;
+            p2 = p2->next;
+        }
+        return NULL;
+    }
+};
