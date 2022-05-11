@@ -1,0 +1,35 @@
+ITERATIVE WAY :
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head)
+    {
+        ListNode* prev = NULL;
+        ListNode* curr = head;
+        ListNode* nexx;
+        
+        while(curr)
+        {
+            nexx = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nexx;
+        }
+        return prev;
+    }
+};
+
+RECURSIVE WAY :
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head)
+    {
+        if(head == NULL || head->next == NULL) return head;
+            
+        ListNode* nn = reverseList(head->next);
+        head->next->next = head;
+        head->next = NULL;
+        return nn;
+    }
+};
