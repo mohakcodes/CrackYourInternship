@@ -1,0 +1,92 @@
+// By creating new LL
+
+class Solution{
+public:
+    Node* divide(int N, Node *head)
+    {
+        Node* odd = new Node(-1);
+        Node* even = new Node(-1);
+        Node* oddst = odd;
+        Node* evenst = even;
+        
+        while(head!=NULL)
+        {
+            if(head->data%2 == 0)
+            {
+                even->next = head;
+                head = head->next;
+                even = even->next;
+                even->next = NULL;
+            }
+            else
+            {
+                odd->next = head;
+                head = head->next;
+                odd = odd->next;
+                odd->next = NULL;
+            }
+        }
+        even->next = oddst->next;
+        return evenst->next;
+    }
+};
+
+// Rearranging Lists Internally
+
+class Solution{
+public:
+    Node* divide(int N, Node *head)
+    {
+        Node* curr = head;
+        Node* end = head;
+        Node* prev = NULL;
+        
+        while(end->next != NULL)
+        {
+            end = end->next;
+        }
+        
+        Node* end_odd = end;
+        
+        while(curr->data % 2 != 0 && curr!=end)
+        {
+            end_odd->next = curr;
+            curr = curr->next;
+            end_odd = end_odd->next;
+            end_odd->next = NULL;
+        }
+        
+        if(curr->data % 2 == 0)
+        {
+            head = curr;
+            while(curr!=end)
+            {
+                if(curr->data % 2 == 0)
+                {
+                    prev = curr;
+                    curr = curr->next;
+                }
+                else
+                {
+                    prev->next = curr->next;
+                    end_odd->next = curr;
+                    end_odd = end_odd->next;
+                    end_odd->next = NULL;
+                    curr = prev->next;
+                }
+            }
+        }
+        else
+        {
+            prev = end;
+        }
+        
+        while(end_odd != end && end->data % 2 != 0)
+        {
+            prev->next = NULL;
+            end->next = NULL;
+            end_odd->next = prev;
+        }
+        return head;
+    }
+};
